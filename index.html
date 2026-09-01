@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datilografia — leituras legíveis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="masthead__stamp">RECONHECIMENTO DE TEXTO · Nº 01</p>
+    <h1 class="masthead__title">Transforme o PDF datilografado<br>em algo legível de novo.</h1>
+    <p class="masthead__sub">Envie a foto ou o PDF escaneado da leitura. O texto é reconhecido no seu próprio navegador — nada sobe para nenhum servidor — e você baixa um PDF novo, na fonte e no tamanho que escolher.</p>
+  </header>
+
+  <section class="step" id="step-upload" data-step="1">
+    <div class="step__label">
+      <span class="step__number">01</span>
+      <span class="step__name">Envie o material</span>
+    </div>
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="image/*,application/pdf" multiple hidden>
+      <p class="dropzone__title">Arraste aqui, ou <button type="button" id="browseBtn" class="linklike">escolha um arquivo</button></p>
+      <p class="dropzone__hint">Fotos (JPG, PNG) ou PDF escaneado. Pode enviar várias páginas de uma vez.</p>
+    </div>
+    <ul id="fileList" class="filelist"></ul>
+    <button type="button" id="startBtn" class="btn" hidden style="margin-top:16px;">Reconhecer texto</button>
+  </section>
+
+  <section class="step" id="step-ocr" data-step="2" hidden>
+    <div class="step__label">
+      <span class="step__number">02</span>
+      <span class="step__name">Reconhecendo o texto</span>
+    </div>
+    <div class="progress">
+      <div class="progress__bar"><div class="progress__fill" id="progressFill"></div></div>
+      <p class="progress__text" id="progressText">Preparando…</p>
+    </div>
+  </section>
+
+  <section class="step" id="step-review" data-step="3" hidden>
+    <div class="step__label">
+      <span class="step__number">03</span>
+      <span class="step__name">Revise o texto</span>
+    </div>
+    <p class="step__hint">O reconhecimento não é perfeito, principalmente em máquina de escrever. Corrija o que precisar antes de gerar o PDF final. Uma linha em branco separa parágrafos.</p>
+    <textarea id="textOutput" class="textoutput" spellcheck="true" lang="pt-BR"></textarea>
+  </section>
+
+  <section class="step" id="step-format" data-step="4" hidden>
+    <div class="step__label">
+      <span class="step__number">04</span>
+      <span class="step__name">Escolha a fonte final</span>
+    </div>
+
+    <div class="controls">
+      <label class="control">
+        <span class="control__label">Fonte</span>
+        <select id="fontFamily" class="control__input">
+          <option value="times">Serifada (Times) — leitura de texto corrido</option>
+          <option value="helvetica">Sem serifa (Helvetica) — mais limpa na tela</option>
+          <option value="courier">Monoespaçada (Courier) — parecida com a máquina original</option>
+        </select>
+      </label>
+
+      <label class="control">
+        <span class="control__label">Tamanho</span>
+        <select id="fontSize" class="control__input">
+          <option value="11">11 pt</option>
+          <option value="12" selected>12 pt</option>
+          <option value="14">14 pt</option>
+          <option value="16">16 pt</option>
+          <option value="18">18 pt</option>
+          <option value="20">20 pt — bem grande</option>
+        </select>
+      </label>
+
+      <label class="control">
+        <span class="control__label">Espaçamento entre linhas</span>
+        <select id="lineSpacing" class="control__input">
+          <option value="1">Simples</option>
+          <option value="1.5" selected>1,5</option>
+          <option value="2">Duplo</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="preview" id="preview">
+      <p id="previewText">Assim vai ficar o texto no PDF final.</p>
+    </div>
+
+    <button type="button" id="generateBtn" class="btn btn--primary" disabled>Gerar PDF final</button>
+    <p class="step__hint" id="generateStatus"></p>
+  </section>
+
+</div>
+
+<footer class="colophon">
+  <p>Roda inteiramente no navegador, sem servidor e sem custo. Código aberto no GitHub.</p>
+</footer>
+
+<script src="https://unpkg.com/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+<script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
